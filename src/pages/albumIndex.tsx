@@ -12,10 +12,20 @@ const AlbumIndexPage = () => {
     })
   }, []);
 
-  return <DefaultLayout>
+  useEffect(() => {
+    const clientWidth = document.getElementsByTagName("html")[0].clientWidth;
+    console.log(`clientWidth:${clientWidth}`);
+
+  }, [])
+
+  // return <DefaultLayout>
+  //   <h1>AlbumnIndexPage</h1>
+  //   {picIndex.map((pic => <CoverItem key={pic.index} picDetail={pic}/>))}
+  // </DefaultLayout>;
+  return <>
     <h1>AlbumnIndexPage</h1>
-    {picIndex.map((pic => <CoverItem picDetail={pic}/>))}
-  </DefaultLayout>;
+    {picIndex.map((pic => <CoverItem key={pic.index} picDetail={pic}/>))}
+  </>;
 };
 
 const CoverItem = ({picDetail}:{picDetail: PicDetail}) => {
