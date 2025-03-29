@@ -1,7 +1,7 @@
 import DefaultLayout from "@/layouts/default";
 import { useEffect, useState } from "react";
 
-export default function AlbumIndexPage() {
+const AlbumIndexPage = () => {
   const [picIndex, setPicIndex] = useState<Array<PicDetail>>([]);
 
   useEffect(() => {
@@ -12,9 +12,15 @@ export default function AlbumIndexPage() {
     })
   }, []);
 
-
   return <DefaultLayout>
     <h1>AlbumnIndexPage</h1>
-    {picIndex.map((pic => <p key={pic.index}>{pic.name}</p>))}
+    {picIndex.map((pic => <CoverItem picDetail={pic}/>))}
   </DefaultLayout>;
-}
+};
+
+const CoverItem = ({picDetail}:{picDetail: PicDetail}) => {
+  const src = `http://192.168.2.12:3002/linux1000/source/${picDetail.name}/${picDetail.cover.replace(".bin", "")}`;
+  return <img src={src}></img>
+};
+
+export default AlbumIndexPage;
