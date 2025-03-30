@@ -54,12 +54,15 @@ const flow1000ConfigSlice = createSlice({
 });
 
 export const { initConfig, } = flow1000ConfigSlice.actions;
+export const { setWindowSize, } = flow1000ContentSlise.actions;
 
 const flow1000ConfigReducer = flow1000ConfigSlice.reducer;
+const flow1000ContentReducer = flow1000ContentSlise.reducer;
 
 export const store = configureStore({
   reducer: {
     flow1000Config: flow1000ConfigReducer,
+    flow1000Content: flow1000ContentReducer,
   },
 });
 
