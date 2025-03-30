@@ -10,7 +10,7 @@ const AlbumIndexPage = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    fetch("/local1000/albumConfig/list")
+    fetch(api.configList)
       .then((resp: Response) => resp.json())
       .then((json: Array<AlbumConfig>) => {
         const albumConfigs: Array<AlbumConfig> = json;
@@ -18,7 +18,7 @@ const AlbumIndexPage = () => {
         return;
       })
       .then(() => {
-        return fetch("/local1000/picIndexAjax");
+        return fetch(api.albumList);
       })
       .then(resp => {
         return resp.json()
