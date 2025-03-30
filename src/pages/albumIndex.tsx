@@ -1,3 +1,4 @@
+import { api } from "@/constants";
 import DefaultLayout from "@/layouts/default";
 import { AlbumConfig, initConfig, PicDetail, RootState, setWindowSize } from "@/store";
 import { useEffect, useState } from "react";
