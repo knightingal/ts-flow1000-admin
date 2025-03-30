@@ -23,6 +23,24 @@ interface ConfigState {
   albumConfigMap: Map<string, AlbumConfig> 
 }
 
+interface Flow1000ContentState {
+  width: number,
+  height: number,
+}
+
+const flow1000ContentSlise = createSlice({
+  name: "flow1000Content",
+  initialState: {
+    width: 0, height: 0,
+  },
+  reducers: {
+    setWindowSize: (state: Flow1000ContentState, action: PayloadAction<{height: number, width: number}>) => {
+      state.width = action.payload.width;
+      state.height = action.payload.height;
+    }
+  }
+});
+
 const flow1000ConfigSlice = createSlice({
   name: "flow1000Config",
   initialState: {
@@ -33,7 +51,7 @@ const flow1000ConfigSlice = createSlice({
       state.albumConfigMap = new Map(action.payload.map(config => [config.name, config]));
     }
   }
-})
+});
 
 export const { initConfig, } = flow1000ConfigSlice.actions;
 
