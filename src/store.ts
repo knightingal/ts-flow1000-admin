@@ -20,17 +20,17 @@ export interface AlbumConfig {
 }
 
 interface ConfigState {
-  albumConfigs: AlbumConfig[]
+  albumConfigMap: Map<string, AlbumConfig> 
 }
 
 const flow1000ConfigSlice = createSlice({
   name: "flow1000Config",
   initialState: {
-    albumConfigs: Array<AlbumConfig>(),
+    albumConfigMap: new Map<string, AlbumConfig>(),
   },
   reducers: {
-    initConfig: (state: ConfigState, action: PayloadAction<ConfigState>) => {
-      state.albumConfigs = action.payload.albumConfigs
+    initConfig: (state: ConfigState, action: PayloadAction<AlbumConfig[]>) => {
+      state.albumConfigMap = new Map(action.payload.map(config => [config.name, config]));
     }
   }
 })

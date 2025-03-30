@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const AlbumIndexPage = () => {
   const [picIndex, setPicIndex] = useState<Array<PicDetail>>([]);
-  const albumConfigs = useSelector((state: RootState) => state.flow1000Config.albumConfigs);
-  const albumConfigMap = new Map(albumConfigs.map(config => [config.name, config]));
+  const albumConfigMap = useSelector((state: RootState) => state.flow1000Config.albumConfigMap);
 
   const dispatch = useDispatch()
 
@@ -15,7 +14,7 @@ const AlbumIndexPage = () => {
       .then((resp: Response) => resp.json())
       .then((json: Array<AlbumConfig>) => {
         const albumConfigs: Array<AlbumConfig> = json;
-        dispatch(initConfig({albumConfigs: albumConfigs}))
+        dispatch(initConfig(albumConfigs));
         return;
       })
       .then(() => {
