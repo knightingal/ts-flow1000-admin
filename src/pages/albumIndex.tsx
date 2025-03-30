@@ -1,5 +1,5 @@
 import DefaultLayout from "@/layouts/default";
-import { AlbumConfig, initConfig, PicDetail, RootState } from "@/store";
+import { AlbumConfig, initConfig, PicDetail, RootState, setWindowSize } from "@/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -29,9 +29,10 @@ const AlbumIndexPage = () => {
   }, []);
 
   useEffect(() => {
-    const clientWidth = document.getElementsByTagName("html")[0].clientWidth;
-    console.log(`clientWidth:${clientWidth}`);
-  }, [])
+    const width = document.body.clientWidth;
+    const height = document.body.clientHeight;
+    dispatch(setWindowSize({height, width}));
+  }, []);
 
   // return <DefaultLayout>
   //   <h1>AlbumnIndexPage</h1>
