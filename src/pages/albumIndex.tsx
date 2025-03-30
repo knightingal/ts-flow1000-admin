@@ -42,6 +42,7 @@ const AlbumIndexPage = () => {
   const width = useSelector((state: RootState) => state.flow1000Content.width);
 
   const dispatch = useDispatch()
+  const [slots, setSlots] = useState<Slot[]>([]);
 
   useEffect(() => {
     fetch(api.configList)
@@ -58,9 +59,24 @@ const AlbumIndexPage = () => {
         return resp.json()
       })
       .then((respJson: Array<PicDetail>) => {
-        setPicIndex(respJson);
+        let slot = [new Slot(), new Slot(), new Slot(), new Slot(), ];
+        respJson.forEach((picDetail, index) => {
+          const coverWidth = width / 4;
+          const coverHeight = picDetail.coverHeight * (coverWidth / picDetail.coverWidth);
+
+          const slotIndex = minSlot(slot);
+          const slotOne = slot[slotIndex];
+          slotOne.slotItemList.push({
+            index: index,
+            scrollOffset: slotOne.totalHeight,
+            itemHeight: coverHeight,
+            slotIndex: slotIndex
+          });
+        });
+        setSlots(slot);
+
       });
-  }, []);
+  }, [width]);
 
   useEffect(() => {
     const width = document.body.clientWidth;
