@@ -39,6 +39,7 @@ const minSlot = (slots: Slot[]): number => {
 const AlbumIndexPage = () => {
   const [picIndex, setPicIndex] = useState<Array<PicDetail>>([]);
   const albumConfigMap = useSelector((state: RootState) => state.flow1000Config.albumConfigMap);
+  const width = useSelector((state: RootState) => state.flow1000Content.width);
 
   const dispatch = useDispatch()
 
