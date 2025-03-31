@@ -34,6 +34,16 @@ const minSlot = (slots: Slot[]): number => {
   return index;
 } 
 
+const SlotItemByIndex = (index: number, slots: Slot[]) => {
+  for (let i = 0; i < 4; i++) {
+    const item = slots[i].itemByIndex(index);
+    if (item) {
+      return item;
+    }
+  }
+  return undefined;
+}
+
 
 
 const AlbumIndexPage = () => {
@@ -93,14 +103,29 @@ const AlbumIndexPage = () => {
   //   {picIndex.map((pic => <CoverItem key={pic.index} picDetail={pic}/>))}
   // </DefaultLayout>;
   return <>
-    <h1>AlbumnIndexPage</h1>
-    {picIndex.map((pic => <CoverItem key={pic.index} picDetail={pic} albumConfigMap={albumConfigMap}/>))}
+    {picIndex.map(((pic, index) => <CoverItem key={pic.index} 
+      picDetail={pic} 
+      albumConfigMap={albumConfigMap} 
+      slotItem={SlotItemByIndex(index, slots) as SlotItem}/>))}
   </>;
 };
 
-const CoverItem = ({picDetail, albumConfigMap}:{picDetail: PicDetail, albumConfigMap: Map<String, AlbumConfig>}) => {
+const CoverItem = ({picDetail, albumConfigMap, slotItem}:{picDetail: PicDetail, albumConfigMap: Map<String, AlbumConfig>, slotItem: SlotItem}) => {
+  if (slotItem === undefined) {
+    return <></>;
+  }
+
+  const width = document.body.clientWidth;
   const src = `http://192.168.2.12:3002/linux1000/${albumConfigMap.get(picDetail.album)?.sourcePath}/${picDetail.name}/${picDetail.cover.replace(".bin", "")}`;
-  return <img src={src}></img>
+  return <img src={src} 
+  style={{
+    position: "absolute",
+    top: slotItem.scrollOffset,
+    left: slotItem.slotIndex * width / 4,
+    width: `${width / 4}px`,
+    height: `${slotItem.itemHeight}`
+  }}
+  ></img>
 };
 
 export default AlbumIndexPage;
