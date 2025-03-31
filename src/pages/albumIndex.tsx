@@ -39,12 +39,19 @@ const minSlot = (slots: Slot[]): number => {
 const AlbumIndexPage = () => {
   const [picIndex, setPicIndex] = useState<Array<PicDetail>>([]);
   const albumConfigMap = useSelector((state: RootState) => state.flow1000Config.albumConfigMap);
-  const width = useSelector((state: RootState) => state.flow1000Content.width);
 
   const dispatch = useDispatch()
   const [slots, setSlots] = useState<Slot[]>([]);
+  useEffect(() => {
+    const width = document.body.clientWidth;
+    const height = document.body.clientHeight;
+    dispatch(setWindowSize({height, width}));
+  }, []);
+  const width = useSelector((state: RootState) => state.flow1000Content.width);
 
   useEffect(() => {
+    // TODO: read from store...
+    const width = document.body.clientWidth;
     fetch(api.configList)
       .then((resp: Response) => resp.json())
       .then((json: Array<AlbumConfig>) => {
@@ -59,6 +66,7 @@ const AlbumIndexPage = () => {
         return resp.json()
       })
       .then((respJson: Array<PicDetail>) => {
+        setPicIndex(respJson);
         let slot = [new Slot(), new Slot(), new Slot(), new Slot(), ];
         respJson.forEach((picDetail, index) => {
           const coverWidth = width / 4;
@@ -72,17 +80,13 @@ const AlbumIndexPage = () => {
             itemHeight: coverHeight,
             slotIndex: slotIndex
           });
+          slotOne.totalHeight = slotOne.totalHeight + coverHeight;
         });
         setSlots(slot);
 
       });
   }, [width]);
 
-  useEffect(() => {
-    const width = document.body.clientWidth;
-    const height = document.body.clientHeight;
-    dispatch(setWindowSize({height, width}));
-  }, []);
 
   // return <DefaultLayout>
   //   <h1>AlbumnIndexPage</h1>
