@@ -61,8 +61,9 @@ const AlbumIndexPage = () => {
   const width = useSelector((state: RootState) => state.flow1000Content.width);
 
   useEffect(() => {
-    // TODO: read from store...
-    const width = document.body.clientWidth;
+    if (width == 0) {
+      return;
+    }
     fetch(api.configList)
       .then((resp: Response) => resp.json())
       .then((json: Array<AlbumConfig>) => {
@@ -107,23 +108,23 @@ const AlbumIndexPage = () => {
     {picIndex.map(((pic, index) => <CoverItem key={pic.index} 
       picDetail={pic} 
       albumConfigMap={albumConfigMap} 
+      totalWidth={width}
       slotItem={SlotItemByIndex(index, slots) as SlotItem}/>))}
   </>;
 };
 
-const CoverItem = ({picDetail, albumConfigMap, slotItem}:{picDetail: PicDetail, albumConfigMap: Map<String, AlbumConfig>, slotItem: SlotItem}) => {
+const CoverItem = ({picDetail, albumConfigMap, slotItem, totalWidth}:{picDetail: PicDetail, albumConfigMap: Map<String, AlbumConfig>, slotItem: SlotItem, totalWidth: number}) => {
   if (slotItem === undefined) {
     return <></>;
   }
 
-  const width = document.body.clientWidth;
   const src = `http://192.168.2.12:3002/linux1000/${albumConfigMap.get(picDetail.album)?.sourcePath}/${picDetail.name}/${picDetail.cover.replace(".bin", "")}`;
   return <img src={src} 
   style={{
     position: "absolute",
     top: slotItem.scrollOffset,
-    left: slotItem.slotIndex * width / 4,
-    width: `${width / 4}px`,
+    left: slotItem.slotIndex * totalWidth / 4,
+    width: `${totalWidth / 4}px`,
     height: `${slotItem.itemHeight}`
   }}
   ></img>
