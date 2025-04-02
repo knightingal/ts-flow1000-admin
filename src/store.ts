@@ -1,4 +1,4 @@
-import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { configureStore, createSlice, PayloadAction, SliceCaseReducers, SliceSelectors } from "@reduxjs/toolkit";
 
 export interface PicDetail {
   sectionIndex: number;
@@ -20,7 +20,7 @@ export interface AlbumConfig {
 }
 
 interface ConfigState {
-  albumConfigMap: Map<string, AlbumConfig> 
+  albumConfigList: AlbumConfig[],
 }
 
 interface Flow1000ContentState {
@@ -41,14 +41,16 @@ const flow1000ContentSlise = createSlice({
   }
 });
 
-const flow1000ConfigSlice = createSlice({
+const flow1000ConfigSlice = createSlice<
+  ConfigState, SliceCaseReducers<ConfigState>, string, SliceSelectors<ConfigState>, string
+>({
   name: "flow1000Config",
   initialState: {
-    albumConfigMap: new Map<string, AlbumConfig>(),
+    albumConfigList: []
   },
   reducers: {
     initConfig: (state: ConfigState, action: PayloadAction<AlbumConfig[]>) => {
-      state.albumConfigMap = new Map(action.payload.map(config => [config.name, config]));
+      state.albumConfigList = action.payload
     }
   }
 });

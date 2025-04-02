@@ -48,7 +48,8 @@ const SlotItemByIndex = (index: number, slots: Slot[]) => {
 
 const AlbumIndexPage = () => {
   const [picIndex, setPicIndex] = useState<Array<PicDetail>>([]);
-  const albumConfigMap = useSelector((state: RootState) => state.flow1000Config.albumConfigMap);
+  const albumConfigList = useSelector((state: RootState) => state.flow1000Config.albumConfigList);
+  const albumConfigMap = new Map(albumConfigList.map(config => [config.name, config]));
 
   const dispatch = useDispatch()
   const [slots, setSlots] = useState<Slot[]>([]);
