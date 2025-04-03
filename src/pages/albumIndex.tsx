@@ -44,8 +44,6 @@ const SlotItemByIndex = (index: number, slots: Slot[]) => {
   return undefined;
 }
 
-
-
 const AlbumIndexPage = () => {
   const [picIndex, setPicIndex] = useState<Array<PicDetail>>([]);
   const albumConfigList = useSelector((state: RootState) => state.flow1000Config.albumConfigList);
@@ -113,12 +111,28 @@ const AlbumIndexPage = () => {
   </>;
 };
 
-const CoverItem = ({picDetail, albumConfigMap, slotItem, totalWidth}:{picDetail: PicDetail, albumConfigMap: Map<String, AlbumConfig>, slotItem: SlotItem, totalWidth: number}) => {
+const CoverItem = ({
+  picDetail, 
+  albumConfigMap, 
+  slotItem, 
+  totalWidth
+}:{
+  picDetail: PicDetail, 
+  albumConfigMap: Map<String, AlbumConfig>, 
+  slotItem: SlotItem, 
+  totalWidth: number
+}) => {
   if (slotItem === undefined) {
     return <></>;
   }
 
-  const src = `http://192.168.2.12:3002/linux1000/${albumConfigMap.get(picDetail.album)?.sourcePath}/${picDetail.name}/${picDetail.cover.replace(".bin", "")}`;
+  const src = `http://192.168.2.12:3002/linux1000/${
+    albumConfigMap.get(picDetail.album)?.sourcePath
+  }/${
+    picDetail.name
+  }/${
+    picDetail.cover.replace(".bin", "")
+  }`;
   return <img 
     src={src} 
     style={{
