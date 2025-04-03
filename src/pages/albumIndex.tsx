@@ -119,14 +119,15 @@ const CoverItem = ({picDetail, albumConfigMap, slotItem, totalWidth}:{picDetail:
   }
 
   const src = `http://192.168.2.12:3002/linux1000/${albumConfigMap.get(picDetail.album)?.sourcePath}/${picDetail.name}/${picDetail.cover.replace(".bin", "")}`;
-  return <img src={src} 
-  style={{
-    position: "absolute",
-    top: slotItem.scrollOffset,
-    left: slotItem.slotIndex * totalWidth / 4,
-    width: `${totalWidth / 4}px`,
-    height: `${slotItem.itemHeight}`
-  }}
+  return <img 
+    src={src} 
+    style={{
+      position: "absolute",
+      top: slotItem.scrollOffset,
+      left: slotItem.slotIndex * totalWidth / 4,
+      width: `${totalWidth / 4}px`,
+      height: `${slotItem.itemHeight}`
+    }}
   ></img>
 };
 
